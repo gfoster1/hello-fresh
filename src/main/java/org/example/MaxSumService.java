@@ -1,40 +1,28 @@
 package org.example;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 public class MaxSumService {
     public MaxSumResult findMaxConsecutiveSum(Integer[] input) {
-        int maxSum = Integer.MIN_VALUE;
-        int start = -1;
-        int end = -1;
-        int sum = 0;
-        for (int i = 0; i < input.length; i++) {
-            sum = input[i];
-            for (int j = i + 1; j < input.length; j++) {
-                // check if sum is withbounds
-                if (withinBounds(sum, input[j])) {
-                    sum += input[j];
-                    if (sum > maxSum) {
-                        System.out.println("sum = " + sum);
-                        maxSum = sum;
-                        start = i;
-                        end = j;
-                    } else {
-                        break;
-                    }
+        if (input.length < 2) {
+            throw new IllegalArgumentException("bad args");
+        }
 
-                }
+        List<MaxSumResult> currentValues = new ArrayList<>();
+        for (int i = 1; i < input.length; i++) {
+            // TODO add optimization to check if the added value is > current max
+            final int value = input[i];
+            int s = currentValues.size();
+            for (int j = 0; j < s; j++) {
+                var previousValue = currentValues.remove(0);
+                var currentValue = new MaxSumResult(previousValue.getSum() + value, previousValue.start, i);
+                currentValues.add(currentValue);
             }
+            currentValues.add(new MaxSumResult(input[i] + input[i - 1], i - 1, i));
         }
-        return new MaxSumResult(maxSum, start, end);
-    }
-
-    private boolean withinBounds(int sum, int integer) {
-        // test if negative
-        if (sum < 0) {
-            int i = sum + Integer.MAX_VALUE;
-        } else if (sum > 0) {
-
-        }
-        return true;
+        return currentValues.stream().max(Comparator.comparingInt(t -> t.sum)).get();
     }
 
     public static final class MaxSumResult {

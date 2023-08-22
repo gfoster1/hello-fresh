@@ -1,6 +1,5 @@
 package org.example;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,25 +22,24 @@ class MaxSumServiceTest {
     }
 
     @Test
-    @DisplayName("")
-    public void simpleArray_findConsectutiveSum_fullArraySum() {
-        var input = new Integer[]{2, -4, 2};
+    public void simpleArray_findConsecutiveSum_fullArraySum() {
+        var input = new Integer[]{2, -4, 2, -1};
         var actualOutput = maxSumService.findMaxConsecutiveSum(input);
-        assertEquals(actualOutput.getSum(), 0);
+        assertEquals(actualOutput.getSum(), 1);
+    }
+
+    @Test
+    public void simpleArray_findConsecutiveSum_correctPositions() {
+        var input = new Integer[]{2, -4, 2, -1};
+        var actualOutput = maxSumService.findMaxConsecutiveSum(input);
+        assertEquals(actualOutput.getStart(), 2);
+        assertEquals(actualOutput.getEnd(), 3);
     }
 
     @Test
     public void test1() {
         var input = new Integer[]{2, -4, 2, -1, 3, -3, 10, -1, -11, -100, 8, -1};
         var actualOutput = maxSumService.findMaxConsecutiveSum(input);
-        assertEquals(actualOutput.getSum(), 11);
-    }
-
-    @Test
-    public void getsPositions() {
-        var input = new Integer[]{2, -4, 2, -1, 3, -3, 10, -1, -11, -100, 8, -1};
-        var actualOutput = maxSumService.findMaxConsecutiveSum(input);
-        assertEquals(actualOutput.getStart(), 2);
-        assertEquals(actualOutput.getEnd(), 6);
+        assertEquals(actualOutput.getSum(), 7);
     }
 }
