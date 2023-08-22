@@ -17,7 +17,7 @@ public class MaxSumService {
             int s = currentValues.size();
             for (int j = 0; j < s; j++) {
                 var previousValue = currentValues.remove(0);
-                var currentValue = new MaxSumResult(previousValue.getSum() + value, previousValue.start, i);
+                var currentValue = new MaxSumResult(previousValue.sum() + value, previousValue.start, i);
                 currentValues.add(currentValue);
             }
             currentValues.add(new MaxSumResult(input[i] + input[i - 1], i - 1, i));
@@ -25,27 +25,6 @@ public class MaxSumService {
         return currentValues.stream().max(Comparator.comparingInt(t -> t.sum)).get();
     }
 
-    public static final class MaxSumResult {
-        private final int sum;
-        private final int start;
-        private final int end;
-
-        public MaxSumResult(int sum, int start, int end) {
-            this.sum = sum;
-            this.start = start;
-            this.end = end;
-        }
-
-        public int getSum() {
-            return sum;
-        }
-
-        public int getStart() {
-            return start;
-        }
-
-        public int getEnd() {
-            return end;
-        }
+    public record MaxSumResult(int sum, int start, int end) {
     }
 }
