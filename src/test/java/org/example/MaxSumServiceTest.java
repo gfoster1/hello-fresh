@@ -2,7 +2,7 @@ package org.example;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MaxSumServiceTest {
     MaxSumService maxSumService = new MaxSumService();
@@ -40,6 +40,8 @@ class MaxSumServiceTest {
     public void test1() {
         var input = new Integer[]{2, -4, 2, -1, 3, -3, 10, -1, -11, -100, 8, -1};
         var actualOutput = maxSumService.findMaxConsecutiveSum(input);
-        assertEquals(actualOutput.sum(), 7);
+        assertEquals(actualOutput.sum(), 11);
+        assertEquals(actualOutput.start(), 2);
+        assertEquals(actualOutput.end(), 6);
     }
 }
